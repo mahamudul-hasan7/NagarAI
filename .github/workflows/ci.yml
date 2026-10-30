@@ -1,0 +1,24 @@
+name: NagarAI CI & Documentation Validation
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Verify Documentation Presence
+        run: |
+          echo "Verifying required SAD lab documentation files..."
+          test -f README.md || (echo "README.md missing" && exit 1)
+          test -f docs/SRS.md || (echo "SRS.md missing" && exit 1)
+          test -f docs/SYSTEM_DESIGN.md || (echo "SYSTEM_DESIGN.md missing" && exit 1)
+          test -f docs/USER_STORIES.md || (echo "USER_STORIES.md missing" && exit 1)
+          test -f prototype/index.html || (echo "Prototype missing" && exit 1)
+          echo "All core SAD deliverables verified successfully!"

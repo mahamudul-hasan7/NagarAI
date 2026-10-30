@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NagarAI - Interactive Prototype Showcase</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans flex flex-col">
+
+    <!-- Top Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 text-xl font-bold shadow-lg shadow-emerald-500/10">
+                    <i class="fa-solid fa-city"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-emerald-400 to-teal-200 bg-clip-text text-transparent">NagarAI (নগর-এআই)</h1>
+                    <p class="text-xs text-slate-400 hidden sm:block">Smart Municipal Governance & AI Triage System</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <a href="https://www.figma.com/design/Zr7zPutMbLYQQgD0HS2oc0/NagarAI-Mobile?node-id=0-1&t=OQEn6nY5H6vatiCX-1" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-emerald-400 border border-slate-700 flex items-center space-x-2 transition">
+                    <i class="fa-brands fa-figma"></i>
+                    <span>Mobile Figma</span>
+                </a>
+                <a href="https://www.figma.com/design/xPXYxt9vMviNMMru0UGfWc/NagarAI-Desktop?t=OQEn6nY5H6vatiCX-1" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-medium text-white shadow-md shadow-emerald-600/30 flex items-center space-x-2 transition">
+                    <i class="fa-brands fa-figma"></i>
+                    <span>Desktop Figma</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Column: Citizen Reporting Simulation -->
+        <section class="lg:col-span-5 bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 backdrop-blur shadow-xl flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between pb-4 border-b border-slate-700/60 mb-5">
+                    <div class="flex items-center space-x-2 text-emerald-400 font-semibold text-sm">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                        <span>Citizen Incident Reporter (Mobile Flow)</span>
+                    </div>
+                    <span class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-mono">Interactive Demo</span>
+                </div>
+
+                <form id="incidentForm" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1.5">Select Sample Civic Incident</label>
+                        <select id="presetSelect" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+                            <option value="pothole">🚧 Major Road Pothole (Dhanmondi Rd 27)</option>
+                            <option value="garbage">🗑️ Overflowing Garbage Dump (Mirpur 10)</option>
+                            <option value="drain">🌊 Blocked Open Drainage & Waterlogging (Uttara Sec 4)</option>
+                            <option value="wire">⚡ Danger: Exposed Live Electric Cable (Mohakhali)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1.5">Description (Bangla or English)</label>
+                        <textarea id="descInput" rows="3" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 transition">রাস্তার ওপর বিশাল গর্তের সৃষ্টি হয়েছে। বৃষ্টির পানি জমে রিকশা উল্টে যাচ্ছে।</textarea>
+                    </div>
+
+                    <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-700/60 flex items-center justify-between text-xs text-slate-400">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-location-dot text-rose-400"></i>
+                            <span id="locationText">GPS: 23.7538° N, 90.3758° E (Ward 15, DSCC)</span>
+                        </div>
+                        <span class="text-emerald-400 font-mono text-[11px]"><i class="fa-solid fa-circle-check"></i> High Accuracy</span>
+                    </div>
+
+                    <button type="button" id="submitBtn" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-medium text-sm shadow-lg shadow-emerald-500/20 flex items-center justify-center space-x-2 transition transform active:scale-95">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Run NagarAI Instant Triage</span>
+                    </button>
+                </form>
+
+                <!-- AI Triage Result Box -->
+                <div id="aiResult" class="hidden mt-6 p-4 rounded-xl bg-slate-900/80 border border-emerald-500/30 space-y-3 animate-fade-in">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-brain"></i> AI Triage Prediction
+                        </span>
+                        <span id="aiConfidence" class="text-xs font-mono text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">96.4% Confidence</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="p-2.5 bg-slate-800/80 rounded-lg">
+                            <div class="text-slate-400">Category</div>
+                            <div id="aiCategory" class="font-semibold text-slate-100 text-sm mt-0.5">Roads & Transport</div>
+                        </div>
+                        <div class="p-2.5 bg-slate-800/80 rounded-lg">
+                            <div class="text-slate-400">Assessed Severity</div>
+                            <div id="aiSeverity" class="font-semibold text-amber-400 text-sm mt-0.5">HIGH</div>
+                        </div>
+                    </div>
+                    <div class="text-xs text-slate-400 pt-1">
+                        <i class="fa-solid fa-route text-slate-500 mr-1"></i> Auto-dispatched to: <strong class="text-slate-200">Ward 15 Road Maintenance Unit</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-700/60 mt-6 text-xs text-slate-500 text-center">
+                Built for System Analysis & Design (SAD) Lab Project • Fall 2026
+            </div>
+        </section>
+
+        <!-- Right Column: Municipal Admin Live Command Center -->
+        <section class="lg:col-span-7 bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 backdrop-blur shadow-xl flex flex-col">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-700/60 mb-5 gap-3">
+                <div class="flex items-center space-x-2 text-teal-400 font-semibold text-sm">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Municipal Command Dashboard (Desktop View)</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="flex h-2.5 w-2.5 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                    </span>
+                    <span class="text-xs text-slate-300 font-mono">Live Dispatch Feed</span>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-3 gap-3 mb-6">
+                <div class="p-4 bg-slate-900/70 border border-slate-800 rounded-xl">
+                    <div class="text-slate-400 text-xs">Total Reports Today</div>
+                    <div id="statTotal" class="text-2xl font-bold text-white mt-1">128</div>
+                    <div class="text-[11px] text-emerald-400 mt-1"><i class="fa-solid fa-arrow-trend-up"></i> +14% vs yesterday</div>
+                </div>
+                <div class="p-4 bg-slate-900/70 border border-slate-800 rounded-xl">
+                    <div class="text-slate-400 text-xs">Auto-Triaged by AI</div>
+                    <div class="text-2xl font-bold text-teal-300 mt-1">98.2%</div>
+                    <div class="text-[11px] text-slate-400 mt-1">Avg latency: 1.4s</div>
+                </div>
+                <div class="p-4 bg-slate-900/70 border border-slate-800 rounded-xl">
+                    <div class="text-slate-400 text-xs">Resolved (24h)</div>
+                    <div class="text-2xl font-bold text-emerald-400 mt-1">94</div>
+                    <div class="text-[11px] text-emerald-400 mt-1">Avg SLA: 8.6 hrs</div>
+                </div>
+            </div>
+
+            <!-- Live Incident Table -->
+            <div class="flex-1 overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-300">
+                    <thead class="text-[11px] uppercase bg-slate-900/90 text-slate-400 border-b border-slate-700">
+                        <tr>
+                            <th class="py-3 px-3">Ticket ID</th>
+                            <th class="py-3 px-3">Issue Type</th>
+                            <th class="py-3 px-3">Ward</th>
+                            <th class="py-3 px-3">Severity</th>
+                            <th class="py-3 px-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="incidentTableBody" class="divide-y divide-slate-800/80">
+                        <!-- Populated by app.js -->
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="border-t border-slate-800 bg-slate-900/80 py-4 text-center text-xs text-slate-500">
+        NagarAI Academic Project • Department of CSE • <a href="https://github.com/mahamudul-hasan7" class="text-slate-400 hover:text-emerald-400 transition">Mahamudul Hasan</a>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
